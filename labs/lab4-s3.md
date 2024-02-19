@@ -129,11 +129,11 @@ For example, this URL is to a publicly-accessible file within a publicly-accessi
     - Click "Edit within the Object Ownership section.
     - Enable ACLs by checking the right-hand radio button. Confirm your changes by checking the box. Leave "Bucket owner preferred" selected. Save your changes.
 
-    These changes have not made your bucket or any of its contents public. However, they have now allowed you the option to specifically make any contents public if you choose to do so.
+    These changes have not made your bucket or any of its contents public. However, they have now allowed you the option to specifically make any contents public if you choose to do so. (Without the above changes this would not be possible.)
 
-    S3 allows you to set a bucket policy to allow public access to ALL objects, or objects of certain types, if you need to do so.
+    S3 also allows you to set a bucket policy to allow public access to ALL objects, or objects of certain types, among many other policy options if needed.
 
-9. Now that your bucket allows you to set public access, fetch another image file from the Internet (`.gif`, `.png`, `.jpg`, etc.) and upload it with this syntax to make it public:
+9. Now that your bucket allows you to grant public access to specific files, fetch another image file from the Internet (`.gif`, `.png`, `.jpg`, etc.) and upload it with this syntax to make it public. Note the `--acl public-read` option:
 
     ```
     aws s3 cp --acl public-read IMAGE s3://BUCKET_NAME/
@@ -162,6 +162,17 @@ For example, this URL is to a publicly-accessible file within a publicly-accessi
     ```
     aws s3 ls s3://ds2002-mst3k/
     ```
+
+12. To empty a bucket completely, a `--recursive` option is available:
+
+    ```
+    aws s3 rm s3://BUCKET_NAME/FILE_NAME --recursive
+    ```
+    You can only delete empty buckets. Once empty, to delete:
+    ```
+    aws s3 rb s3://BUCKET_NAME
+    ```
+
 
 ## Using the `boto3` library with Python3
 
