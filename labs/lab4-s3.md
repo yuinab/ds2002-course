@@ -38,7 +38,7 @@ AWS operates many `regions` of infrastructure around the world. We will be using
 https://s3.amazonaws.com/ + BUCKET_NAME + / file/path.sfx
 ```
 For example, this URL is to a publicly-accessible file within a publicly-accessible bucket:
-[`https://s3.amazonaws.com/ds2002-nem2p/vuelta.jpg`](https://s3.amazonaws.com/ds2002-nem2p/vuelta.jpg)
+[`https://s3.amazonaws.com/ds2002-mst3k/vuelta.jpg`](https://s3.amazonaws.com/ds2002-mst3k/vuelta.jpg)
 
 
 
@@ -84,7 +84,7 @@ For example, this URL is to a publicly-accessible file within a publicly-accessi
     ```
     which should return something like:
     ```
-    $ aws s3 ls s3://ds2002-nem2p/
+    $ aws s3 ls s3://ds2002-mst3k/
     2024-02-19 08:13:49     309510 vuelta.jpg
     ```
 
@@ -92,7 +92,7 @@ For example, this URL is to a publicly-accessible file within a publicly-accessi
     ```
     # https://s3.amazonaws.com/ + BUCKET_NAME + / FILE_PATH
     
-    https://s3.amazonaws.com/ds2002-nem2p/vuelta.jpg
+    https://s3.amazonaws.com/ds2002-mst3k/vuelta.jpg
     ```
     Test that URL using your web browser. What do you see?
 
@@ -100,20 +100,27 @@ For example, this URL is to a publicly-accessible file within a publicly-accessi
 
     The syntax for the command is:
     ```
-    aws s3 presign --expires-in 30 s3://ds2002-nem2p/vuelta.jpg
+    aws s3 presign --expires-in 30 s3://ds2002-mst3k/vuelta.jpg
 
     # The --expires-in flag is how many seconds the file should be public.
     # The s3:// is the BUCKET+FILE path to your specific file.
     ```
 
-    Once you issue this command, it will return a very long URL with signature. Open that link in a browser - you should be able to see your file.
+    Once you issue this command, it will return a long URL with signature:
+    
+    ```
+    https://s3.amazonaws.com/ds2002-mst3k/pdfs/json-overview.pdf?AWSAccessKeyId=AKIAJLBYZFLFQQT256OQ&Signature=cjcY98KLjZ6CXbTnaZ9Srt8MQVM%3D&Expires=1708376373
+    ```
+    
+    Open that link in a browser - you should be able to see your file.
 
-    Finally, refresh the browser page after the expiration period has elapsed. What do you see then?
+    If you refresh the browser after the expiration period has elapsed, what do you see then?
 
 8. Update your bucket's ACL (Access Control List)
 
-    - Open the AWS Management Console to perform this task.
-    - AWS Academy users click the "Download URL" button in the "AWS Details" panel of your Learner Lab.
+    - Open the AWS Management Console to perform this task: 
+        - AWS Academy users click the "Download URL" button in the "AWS Details" panel of your Learner Lab. The URL in that file will sign you in automatically.
+        - Personal AWS account users should go to https://console.aws.amazon.com/ and sign in.
     - Within the AWS Management Console, open the S3 service and find your bucket.
     - Click the name of the bucket to get detailed settings.
     - Select the Permissions tab within your bucket settings.
@@ -160,9 +167,14 @@ For example, this URL is to a publicly-accessible file within a publicly-accessi
 
 Developers should keep in mind that S3 is a web service, or API, which means that in addition to using the AWS Management Console or CLI tools you can work with any AWS service using the language of your choice.
 
-In this final section of the lab you will perform basic S3 operations using Python3 and the `boto3` library.
+In this section of the lab you will perform basic S3 operations using Python3 and the `boto3` library.
 
-### Install and Import `boto3`
+Complete documentation for `boto3` is available:
+
+* `boto3` - https://boto3.amazonaws.com/v1/documentation/api/latest/index.html
+* `s3` - https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3.html
+
+### 1. Install and Import `boto3`
 
 To work with `boto3` you must first make sure it is installed, so that you can import it. From a terminal:
 
@@ -178,9 +190,12 @@ Type "help", "copyright", "credits" or "license" for more information.
 >>> import boto3
 >>>
 ```
+
+**NOTE**: If you get a Python 3.7 `PythonDeprecationWarning` that is to be expected. If you are using the AWS Academy Learner Lab you can get around this by explicitly invoking `python3.8` when you run Python.
+
 The following tasks assume you are able to import `boto3` successfully.
 
-### Upload a file to S3 and keep it private
+### 2. Upload a file to S3 and keep it private
 
 1. Each AWS service you connect to via `boto3` needs a `client` or `resource` or some other reusable connection. Let's create a simple client for the S3 service:
 
@@ -189,30 +204,32 @@ The following tasks assume you are able to import `boto3` successfully.
 
     s3 = boto3.client('s3', region_name='us-east-1')
     ```
-    The variable `s3` populated with an instance of the `boto3.client` class can be named anything you like. It is now a reusable object for calling that specific service.
+    The variable `s3` populated with an instance of the `boto3.client` class can be named anything you like. Once a class object it can be reused for other calls to that specific service.
 
-    **NOTE**: If you get a Python 3.7 `PythonDeprecationWarning` that is to be expected. If you are using the AWS Academy Learner Lab you can get around this by explicitly invoking `python3.8` when you run Python.
 
-2. Once you have created a client you are now ready to work with it. In your command prompt (in a local terminal or VSCode, etc.), upon invoking the `s3` class object you just created, you will notice many new options:
+2. Once you have created a client you are now ready to use it. In your command prompt (in a local terminal or VSCode, etc.), upon invoking the `s3` class object you just created, you will notice many new options:
 
     ```python3
     s3.<TAB>
     ```
 
-3. For instance, you can list your buckets:
+3. For instance, list all your buckets:
 
     ```
     import boto3
 
+    # create client
     s3 = boto3.client('s3', region_name="us-east-1")
+
+    # make request
     response = s3.list_buckets()
 
-    # now iterate through the responses:
+    # now iterate through the response:
     for r in response['Buckets']:
       print(r['Name'])
     ```
 
-    This should return the name(s) of any bucket(s) in your account. Note that above, a variable named `response` was created and populated with the results of the `list_buckets()` method. This is an arbitrary variable name - you can always use your own.
+    This will return the name(s) of any bucket(s) in your account in a full JSON payload, with all results nested a single array. Note that above, a variable named `response` was created and populated with the results of the `list_buckets()` method. This is an arbitrary variable name - you can always use your own.
 
 4. To upload a file to your bucket:
 
@@ -229,20 +246,18 @@ The following tasks assume you are able to import `boto3` successfully.
 
     Some explanation:
 
-      - The `bucket` is an S3 bucket that already exists.
-      - The `local_file` is the path/file that you want to upload.
-      - The `Key` within the `put_object()` method is the destination path you want for the uploaded path.
+      - `bucket` is an S3 bucket that already exists.
+      - `local_file` is the path/file you want to upload.
+      - `Key` within the `put_object()` method is the destination path you want for the uploaded path.
       - These three parameters are the minimum required for a `put_object` call. There are many other options.
 
 5. Write your own upload script and test for success. Try getting the file using a public URL. You should get `Permission Denied`.
 
-### Upload a file to S3 and make it public
+### 3. Upload a file to S3 and make it public
 
 Upload a new file to S3 with public visibility. The request will be like the one above, but add the following parameter:
 
-    ```
         ACL = 'public-read',
-    ```
 
 Test your file upload using a public URL to see if you can access it.
 
