@@ -1,6 +1,6 @@
 # Lab 4: S3 Storage
 
-Follow all the steps below for practice working with the S3 service in Amazon Web Services. There are two scripts you will develop in this lab. Commit both to your forked copy of the course repository, and paste both URLs into the answer for submission.
+Follow all the steps below for practice working with the S3 service in Amazon Web Services. You will write a series of scripts for this lab. Create a folder within `mywork/` named `lab4` and put your scripts into that directory. Commit these to your forked copy of the course repository, and paste the GitHub URL to the folder into the answer for submission.
 
 This lab requires that you have both the AWS CLI tool (with keys) and Python3 / `boto3` installed.
 - AWS Academy students can use the built-in web terminal, which has Python3, `boto3`, and the AWS CLI installed, or can set them up in their local environment.
@@ -248,4 +248,6 @@ Test your file upload using a public URL to see if you can access it.
 
 ## Submit your work
 
-This lab has you create two scripts. They should be put into a folder `ds2002-course/mywork/lab3` within your fork of the course repository, added, committed, and pushed. Then send the two (2) URLs - one for each file - in the text box within Canvas.
+Your work should be put into a folder `ds2002-course/mywork/lab4` within your fork of the course repository -- added, committed, and pushed.
+
+Submit the GitHub URL to that folder into Canvas for grading.
