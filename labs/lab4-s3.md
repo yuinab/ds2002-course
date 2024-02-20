@@ -28,7 +28,7 @@ In this lab you will:
 8. Upload a file and delete it.
 9. Finally, write Python3 scripts using the `boto3` library to upload one private file and one public file.
 
-## About S3 and URL Access
+## S3 Security and HTTP Access by URL
 
 S3 buckets are PRIVATE by default. No files/objects uploaded to a plain, unaltered bucket is ever publicly-accessible. In this lab you will learn more about public/private buckets and objects.
 
@@ -39,7 +39,6 @@ https://s3.amazonaws.com/ + BUCKET_NAME + / file/path.sfx
 ```
 For example, this URL is to a publicly-accessible file within a publicly-accessible bucket:
 [`https://s3.amazonaws.com/ds2002-mst3k/vuelta.jpg`](https://s3.amazonaws.com/ds2002-mst3k/vuelta.jpg)
-
 
 
 ## Create and Configure an S3 Bucket
@@ -215,6 +214,7 @@ The following tasks assume you are able to import `boto3` successfully.
 
     s3 = boto3.client('s3', region_name='us-east-1')
     ```
+    
     The variable `s3` populated with an instance of the `boto3.client` class can be named anything you like. Once a class object it can be reused for other calls to that specific service.
 
 
