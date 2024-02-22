@@ -8,7 +8,7 @@ This lab requires that you have both the AWS CLI tool (with keys) and Python3 / 
 
 Installations:
 - [Python3](https://www.python.org/downloads/)
-- [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
+- [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) - can be installed as a binary installer, or from `pip`: `python3 -m pip install awscli`
 - `boto3` - is a simple `pip` command in your terminal:
 ```bash
 python3 -m pip install boto3
