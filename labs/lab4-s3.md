@@ -283,7 +283,7 @@ Test your file upload using a public URL to see if you can access it.
 
 Like the `bash` script you wrote above, now write a simple Python script that performs a similar task. Your script should:
 
-  - Fetch and save a file from the internet using `requests` or some other simple method. A simple gif would work.
+  - Fetch and save a file from the internet using `urllib`, `requests` or some other simple method. A simple gif would be a good file to work with.
   - Upload the file to a bucket in S3.
   - Presign the file with an expiration time in seconds - `864000` (10 days).
   - Output the presigned URL.
