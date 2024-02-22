@@ -1,6 +1,6 @@
 # Lab 4: S3 Storage
 
-Follow all the steps below for practice working with the S3 service in Amazon Web Services. You will write a series of scripts for this lab. Create a folder within `mywork/` named `lab4` and put your scripts into that directory. Commit these to your forked copy of the course repository, and paste the GitHub URL to the folder into the answer for submission.
+Follow all the steps below for practice working with the S3 service in Amazon Web Services. Among several other tasks you will write two scripts for this lab. Create a folder within `mywork/` named `lab4` and put your scripts into that directory. Commit these to your forked copy of the course repository, and paste the GitHub URL to the folder into the answer for submission.
 
 This lab requires that you have both the AWS CLI tool (with keys) and Python3 / `boto3` installed.
 - AWS Academy students can use the built-in web terminal, which has Python3, `boto3`, and the AWS CLI installed, or can set them up in their local environment. [Here is a video](https://www.youtube.com/watch?v=izkD2K83Dcs) that walks you through accessing the Learner Lab in AWS Academy.
