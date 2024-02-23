@@ -283,31 +283,25 @@ Test your file upload using a public URL to see if you can access it.
 
 Like the `bash` script you wrote above, now write a simple Python script that performs a similar task. Your script should:
 
-  - Fetch and save a file from the internet using `urllib`, `requests` or some other simple method. A simple gif would be a good file to work with.
+  - Fetch and save a file from the internet using `urllib`, `requests` or some other simple method. A simple gif would be a good file to work with, but your code should pull the file, not a human manually saving it.
   - Upload the file to a bucket in S3.
-  - Presign the file with an expiration time in seconds - `864000` (10 days).
+  - Presign the file with an expiration time in seconds - `864000` (10 days). Documentation for that method is [here](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/s3-presigned-urls.html)
   - Output the presigned URL.
   - Please run your script at least once and include the presigned URL in your submission.
 
 Here is a snippet for generating presigned URLs:
 
 ```python
-import boto3
-
 # vars needed
 bucket_name = str
 object_name = str
 expires_in = int
-
-s3 = boto3.client('s3')
 
 response = s3.generate_presigned_url(
     'get_object',
     Params={'Bucket': bucket_name, 'Key': object_name},
     ExpiresIn=expires_in
     )
-
-print(response)
 ```
 
 ## Submit your work
